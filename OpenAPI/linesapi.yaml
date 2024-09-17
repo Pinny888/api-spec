@@ -22,65 +22,6 @@ schemes:
 security:
   - basicAuth: []
 paths:
-  /v1/fixtures:
-    get:
-      tags:
-        - Fixtures
-      summary: Get Fixtures - v1
-      description: Returns all **non-settled** events for the given sport. Please note that it is possible that the event is in Get Fixtures response but not in Get Odds. This happens when the odds are not currently available for wagering. Please note that it is possible to receive the same exact response when using **since** parameter. This is rare and can be caused by internal updates of event properties.
-      operationId: Fixtures_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: The sport id to retrieve the fixtures for.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: The leagueIds array may contain a list of comma separated league ids.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: isLive
-          in: query
-          description: To retrieve ONLY live events set the value to 1 (isLive=1). Missing or any other value will result in retrieval of events regardless of their Live status.
-          required: false
-          type: boolean
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last from previous fixtures response. When since parameter is not provided, the fixtures are delayed up to 1 minute to encourage the use of the parameter.
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/FixturesResponseV1'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v3/fixtures:
     get:
       tags:
@@ -148,272 +89,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-  /v1/fixtures/special:
-    get:
-      tags:
-        - Fixtures
-      summary: Get Special Fixtures - v1
-      description: Returns all **non-settled** specials for the given sport.
-      operationId: Fixtures_Special_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: Id of a sport for which to retrieve the specials.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: The leagueIds array may contain a list of comma separated league ids.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last field from the previous response. When since parameter is not provided, the fixtures are delayed up to 1 min to encourage the use of the parameter.
-          required: false
-          type: integer
-          format: int64
-        - name: category
-          in: query
-          description: The category the special falls under.
-          required: false
-          type: string
-        - name: eventId
-          in: query
-          description: Id of an event associated with a special.
-          required: false
-          type: integer
-          format: int64
-        - name: specialId
-          in: query
-          description: Id of the special.
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/SpecialsFixturesResponse'
-          examples:
-            application/json:
-              sportId: 4
-              last: 636433059508250600
-              leagues:
-                - id: 487
-                  specials:
-                    - id: 1
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 4th quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: I
-                      event:
-                        id: 1
-                        periodNumber: 0
-                      contestants:
-                        - id: 1
-                          name: Odd
-                          rotNum: 100
-                        - id: 2
-                          name: Even
-                          rotNum: 101
-                    - id: 2
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 3rd quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: I
-                      event:
-                        id: 1
-                        periodNumber: 0
-                      contestants:
-                        - id: 3
-                          name: Odd
-                          rotNum: 100
-                        - id: 4
-                          name: Even
-                          rotNum: 101
-                    - id: 3
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 2nd quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: H
-                      event:
-                        id: 1
-                        periodNumber: 0
-                      contestants:
-                        - id: 5
-                          name: Odd
-                          rotNum: 100
-                        - id: 6
-                          name: Even
-                          rotNum: 101
-                    - id: 4
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 1st quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: I
-                      event:
-                        id: 1
-                        periodNumber: 0
-                      contestants:
-                        - id: 7
-                          name: Odd
-                          rotNum: 100
-                        - id: 8
-                          name: Even
-                          rotNum: 101
-                    - id: 5
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 4th quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: null
-                      event:
-                        id: 2
-                        periodNumber: 0
-                      contestants:
-                        - id: 9
-                          name: Odd
-                          rotNum: 100
-                        - id: 10
-                          name: Even
-                          rotNum: 101
-                    - id: 6
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 3rd quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: I
-                      event:
-                        id: 2
-                        periodNumber: 0
-                      contestants:
-                        - id: 11
-                          name: Odd
-                          rotNum: 100
-                        - id: 12
-                          name: Even
-                          rotNum: 101
-                    - id: 7
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 2nd quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: I
-                      event:
-                        id: 2
-                        periodNumber: 0
-                      contestants:
-                        - id: 13
-                          name: Odd
-                          rotNum: 100
-                        - id: 14
-                          name: Even
-                          rotNum: 101
-                    - id: 8
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Will the 1st quarter be odd or even?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: 1/4 Totals
-                      units: ""
-                      status: H
-                      event:
-                        id: 2
-                        periodNumber: 0
-                      contestants:
-                        - id: 15
-                          name: Odd
-                          rotNum: 100
-                        - id: 16
-                          name: Even
-                          rotNum: 101
-                    - id: 9
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Who will win the NBA finals?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: Outright Winner
-                      units: ""
-                      status: I
-                      contestants:
-                        - id: 17
-                          name: Golden State Warriors
-                          rotNum: 100
-                        - id: 18
-                          name: Cleveland Cavaliers
-                          rotNum: 101
-                        - id: 19
-                          name: San Antonio Spurs
-                          rotNum: 102
-                        - id: 20
-                          name: Chicago Bulls
-                          rotNum: 103
-                - id: 578
-                  specials:
-                    - id: 10
-                      betType: MULTI_WAY_HEAD_TO_HEAD
-                      name: Who will win the WNBA finals?
-                      date: '2017-10-11T14:00:00Z'
-                      cutoff: '2017-10-11T14:00:00Z'
-                      category: Outright Winner
-                      units: ""
-                      status: I
-                      contestants:
-                        - id: 21
-                          name: Minnesota Lynx
-                          rotNum: 100
-                        - id: 22
-                          name: Indiana Fever
-                          rotNum: 101
-                        - id: 23
-                          name: Phoenix Mercury
-                          rotNum: 102
-                        - id: 24
-                          name: Chicago Sky
-                          rotNum: 103
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v2/fixtures/special:
     get:
       tags:
@@ -680,75 +355,6 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
       deprecated: false
-  /v1/fixtures/settled:
-    get:
-      tags:
-        - Fixtures
-      summary: Get Settled Fixtures - v1
-      description: Returns fixtures settled in the last 24 hours for the given sport.
-      operationId: Fixtures_Settled_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: Id of the sport for which to retrieve the settled.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: The leagueIds array may contain a list of comma separated league ids.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last from previous response.
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/SettledFixturesSportV1'
-          examples:
-            application/json:
-              sportId: 0
-              last: 0
-              leagues:
-                - id: 0
-                  events:
-                    - id: 0
-                      periods:
-                        - number: 0
-                          status: 0
-                          settlementId: 0
-                          settledAt: '2017-09-03T18:21:22.3846289-07:00'
-                          team1Score: 0
-                          team2Score: 0
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v3/fixtures/settled:
     get:
       tags:
@@ -832,71 +438,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-  /v1/fixtures/special/settled:
-    get:
-      tags:
-        - Fixtures
-      summary: Get Settled Special Fixtures - v1
-      description: Returns all specials which are settled in the last 24 hours for the given Sport.
-      operationId: Fixtures_Specials_Settled_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: Id of the sport for which to retrieve the settled specials.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: Array of leagueIds. This is optional parameter.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last from previous response.
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/SettledSpecialsResponseV1'
-          examples:
-            application/json:
-              sportId: 0
-              last: 0
-              leagues:
-                - id: 0
-                  specials:
-                    - id: 0
-                      status: 0
-                      settlementId: 0
-                      settledAt: '2017-10-11T15:05:50.996671Z'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v3/fixtures/special/settled:
     get:
       tags:
@@ -984,76 +525,6 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
       deprecated: false
-  /v1/odds:
-    get:
-      tags:
-        - Odds
-      summary: Get Straight Odds - v1
-      description: Returns straight odds for all non-settled events. Please note that it is possible that the event is in Get Fixtures response but not in Get Odds. This happens when the odds are not currently available for wagering.
-      operationId: Odds_Straight_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: The sportid for which to retrieve the odds.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: The leagueIds array may contain a list of comma separated league ids.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: oddsFormat
-          in: query
-          description: Format in which we return the odds. Default is American. [American, Decimal, HongKong, Indonesian, Malay]
-          required: false
-          type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last from previous odds response. When since parameter is not provided, the odds are delayed up to 1 min to encourage the use of the parameter. Please note that when using since parameter you will get in the response ONLY changed periods. If a period did not have any changes it will not be in the response.
-          required: false
-          type: integer
-          format: int64
-        - name: isLive
-          in: query
-          description: To retrieve ONLY live odds set the value to 1 (isLive=1). Otherwise response will have all odds.
-          required: false
-          type: boolean
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/OddsResponseV1'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v3/odds:
     get:
       tags:
@@ -1137,76 +608,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-  /v1/odds/parlay:
-    get:
-      tags:
-        - Odds
-      summary: Get Parlay Odds - v1
-      description: Returns parlay odds for all non-settled events. Please note that it is possible that the event is in Get Fixtures response but notin Get Odds. This happens when the odds are not currently available for wagering.
-      operationId: Odds_Parlays_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: The sportid for which to retrieve the odds.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: The leagueIds array may contain a list of comma separated league ids.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: oddsFormat
-          in: query
-          description: Format in which we return the odds. Default is American. [American, Decimal, HongKong, Indonesian, Malay]
-          required: false
-          type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last from previous odds response. When since parameter is not provided, the odds are delayed up to 1 min to encourage the use of the parameter. Please note that when using since parameter you will get in the response ONLY changed periods. If a period didn’t have any changes it will not be in the response.
-          required: false
-          type: integer
-          format: int64
-        - name: isLive
-          in: query
-          description: To retrieve ONLY live odds set the value to 1 (isLive=1). Otherwise response will have all odds.
-          required: false
-          type: boolean
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ParlayOddsResponseV1'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v3/odds/parlay:
     get:
       tags:
@@ -1323,127 +724,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-  /v1/odds/special:
-    get:
-      tags:
-        - Odds
-      summary: Get Special Odds - v1
-      description: Returns odds for specials for all non-settled events.
-      operationId: Odds_Special_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: oddsFormat
-          in: query
-          description: Format the odds are returned in. [American, Decimal, HongKong, Indonesian, Malay]
-          required: false
-          type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
-        - name: sportId
-          in: query
-          description: Id of a sport for which to retrieve the specials.
-          required: true
-          type: integer
-          format: int32
-        - name: leagueIds
-          in: query
-          description: The leagueIds array may contain a list of comma separated league ids.
-          required: false
-          type: array
-          items:
-            type: integer
-            format: int32
-          collectionFormat: multi
-        - name: since
-          in: query
-          description: This is used to receive incremental updates. Use the value of last from previous response. When since parameter is not provided, the fixtures are delayed up to 1 min to encourage the use of the parameter.
-          required: false
-          type: integer
-          format: int64
-        - name: specialId
-          in: query
-          description: Id of the special. This is an optional argument.
-          required: false
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/SpecialOddsResponse'
-          examples:
-            application/json:
-              sportId: 4
-              last: 636433059510590700
-              leagues:
-                - id: 487
-                  specials:
-                    - id: 1
-                      maxBet: 100
-                      contestantLines:
-                        - id: 1
-                          lineId: 1001
-                          price: -199
-                          handicap: null
-                        - id: 2
-                          lineId: 1002
-                          price: -198
-                          handicap: null
-                    - id: 7
-                      maxBet: 100
-                      contestantLines:
-                        - id: 13
-                          lineId: 1013
-                          price: -187
-                          handicap: null
-                        - id: 14
-                          lineId: 1014
-                          price: -186
-                          handicap: null
-                - id: 578
-                  specials:
-                    - id: 10
-                      maxBet: 100
-                      contestantLines:
-                        - id: 21
-                          lineId: 1021
-                          price: -179
-                          handicap: null
-                        - id: 22
-                          lineId: 1022
-                          price: -178
-                          handicap: null
-                        - id: 23
-                          lineId: 1023
-                          price: -177
-                          handicap: null
-                        - id: 24
-                          lineId: 1024
-                          price: -176
-                          handicap: null
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v2/odds/special:
     get:
       tags:
@@ -1572,108 +852,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: false      
-  /v1/line:
-    get:
-      tags:
-        - Line
-      summary: Get Straight Line - v1
-      description: Returns latest line.
-      operationId: Line_Straight_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: leagueId
-          in: query
-          description: League Id.
-          required: true
-          type: integer
-          format: int32
-        - name: handicap
-          in: query
-          description: This is needed for SPREAD, TOTAL_POINTS and TEAM_TOTAL_POINTS bet types
-          required: true
-          type: number
-          format: double
-        - name: oddsFormat
-          in: query
-          description: Format in which we return the odds. Default is American.
-          required: true
-          type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
-        - name: sportId
-          in: query
-          description: Sport identification
-          required: true
-          type: integer
-          format: int32
-        - name: eventId
-          in: query
-          description: Event identification
-          required: true
-          type: integer
-          format: int64
-        - name: periodNumber
-          in: query
-          description: This represents the period of the match. For example, for soccer we have 0 (Game),  1 (1st Half) & 2 (2nd Half)
-          required: true
-          type: integer
-          format: int32
-        - name: betType
-          in: query
-          description: Bet Type
-          required: true
-          type: string
-          enum:
-            - SPREAD
-            - MONEYLINE
-            - TOTAL_POINTS
-            - TEAM_TOTAL_POINTS
-        - name: team
-          in: query
-          description: Chosen team type. This is needed only for SPREAD, MONEYLINE and TEAM_TOTAL_POINTS bet types
-          required: false
-          type: string
-          enum:
-            - Team1
-            - Team2
-            - Draw
-        - name: side
-          in: query
-          description: Chosen side. This is needed only for TOTAL_POINTS and TEAM_TOTAL_POINTS
-          required: false
-          type: string
-          enum:
-            - OVER
-            - UNDER
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/LineResponse'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true              
+      deprecated: false                  
   /v2/line:
     get:
       tags:
@@ -1774,45 +953,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'            
-  /v1/line/parlay:
-    post:
-      tags:
-        - Line
-      summary: Get Parlay Line - v1
-      description: Returns parlay lines and calculate odds.
-      operationId: Line_Parlay_V1_Post
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: request
-          required: true
-          schema:
-            $ref: '#/definitions/ParlayLinesRequest'
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/ParlayLinesResponse'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true              
   /v2/line/parlay:
     post:
       tags:
@@ -1889,62 +1029,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-  /v1/line/special:
-    get:
-      tags:
-        - Line
-      operationId: Line_Special_V1_Get
-      summary: Get Special Line - v1
-      description: Returns special lines and calculate odds.
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: oddsFormat
-          in: query
-          description: Format the odds are returned in. [American, Decimal, HongKong, Indonesian, Malay]
-          required: true
-          type: string
-          enum:
-            - American
-            - Decimal
-            - HongKong
-            - Indonesian
-            - Malay
-        - name: specialId
-          in: query
-          description: Id of the special.
-          required: true
-          type: integer
-          format: int64
-        - name: contestantId
-          in: query
-          description: Id of the contestant.
-          required: true
-          type: integer
-          format: int64
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/SpecialLineResponse'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true
   /v2/line/special:
     get:
       tags:
@@ -2007,35 +1091,6 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
       deprecated: false      
-  /v1/sports:
-    get:
-      tags:
-        - Others  
-      summary: Get Sports - v1
-      description: Returns all sports with the status whether they currently have lines or not.
-      operationId: Sports_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/SportsResponseV1'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/LinesErrorResponse'
-      deprecated: true
   /v3/sports:
     get:
       tags:
@@ -2064,44 +1119,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/LinesErrorResponse'
-  /v1/leagues:
-    get:
-      tags:
-        - Others
-      summary: Get Leagues - v1
-      description: Returns all sports leagues with the status whether they currently have lines or not.
-      operationId: Leagues_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: sportId
-          in: query
-          description: Sport id for which the leagues are requested.
-          required: true
-          type: string
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/LeaguesV1'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
-      deprecated: true    
   /v3/leagues:
     get:
       tags:
@@ -2217,35 +1234,6 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
-  /v1/inrunning:
-    get:
-      tags:
-        - Others
-      summary: Get In-Running - v1
-      description: Returns all live soccer events that have a status that indicates the event is in progress.
-      operationId: InRunning_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters: []
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/InRunningResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedLinesErrorResponse'
-      deprecated: true            
   /v2/inrunning:
     get:
       tags:
@@ -2611,9 +1599,6 @@ definitions:
       away:
         type: string
         description: Away team name.
-      rotNum:
-        type: string
-        description: Team1 rotation number. Please note that in the next version of /fixtures, rotNum property will be decommissioned. ParentId can be used instead to group the related events.
       liveStatus:
         type: integer
         format: int32
@@ -2633,21 +1618,6 @@ definitions:
       awayPitcher:
         type: string
         description: Away team pitcher. Only for Baseball.
-      status:
-        type: string
-        description: |
-        
-          This is deprecated parameter, please check period's `status` in the
-            `/odds` endpoint to see if it's open for betting.
-          
-          O = This is the starting status of a game. It means that the lines are open for betting, 
-          H = This status indicates that the lines are temporarily unavailable for betting, 
-          I = This status indicates that one or more lines have a red circle (lower maximum bet amount)
-        enum:
-          - O
-          - H
-          - I
-        deprecated: true  
       betAcceptanceType:
         type: integer
         format: int32
@@ -2690,86 +1660,6 @@ definitions:
         format: int64
         description: |
            Fixture version, goes up when there is a change in the fixture.
-  SettledFixturesSportV1:
-    type: object
-    properties:
-      sportId:
-        type: integer
-        format: int32
-        description: Same as requested sport Id.
-      last:
-        type: integer
-        format: int64
-        description: Use this value for the subsequent requests for since query parameter to get just the changes since previous response.
-      leagues:
-        type: array
-        description: Contains a list of Leagues.
-        items:
-          $ref: '#/definitions/SettledFixturesLeagueV1'
-  SettledFixturesLeagueV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: League Id.
-      events:
-        type: array
-        description: Contains a list of events.
-        items:
-          $ref: '#/definitions/SettledFixturesEventV1'
-  SettledFixturesEventV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-        description: Event Id.
-      periods:
-        type: array
-        description: Contains a list of periods.
-        items:
-          $ref: '#/definitions/SettledFixturesPeriodV1'
-  SettledFixturesPeriodV1:
-    type: object
-    properties:
-      number:
-        type: integer
-        format: int32
-        description: This represents the period of the match. For example, for soccer we have 0 (Game), 1 (1st Half) & 2 (2nd Half)
-      status:
-        type: integer
-        format: int32
-        description: |
-          Period settlement status. 
-          
-          1 = Event period is settled, 
-          2 = Event period is re-settled, 
-          3 = Event period is cancelled, 
-          4 = Event period is re-settled as cancelled, 
-          5 = Event is deleted
-        enum:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-      settlementId:
-        type: integer
-        format: int64
-        description: Unique id of the settlement. In case of a re-settlement, a new settlementId and settledAt will be generated.
-      settledAt:
-        type: string
-        format: date-time
-        description: Date and time in UTC when the period was settled.
-      team1Score:
-        type: integer
-        format: int32
-        description: Team1 score.
-      team2Score:
-        type: integer
-        format: int32
-        description: Team2 score.
   SettledFixturesSportV3:
     type: object
     properties:
@@ -2939,33 +1829,6 @@ definitions:
         type: integer
         format: int32
         description: Elapsed minutes
-  LeaguesV1:
-    type: object
-    properties:
-      leagues:
-        type: array
-        description: Leagues container
-        items:
-          $ref: '#/definitions/LeagueV1'
-  LeagueV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: League Id.
-      name:
-        type: string
-        description: Name of the league.
-      homeTeamType:
-        type: string
-        description: Specifies whether the home team is team1 or team2. You need this information to place a bet.
-      hasOfferings:
-        type: boolean
-        description: Whether the league currently has events or specials.
-      allowRoundRobins:
-        type: boolean
-        description: Specifies whether you can place parlay round robins on events in this league.
   LeaguesV3:
     type: object
     properties:
@@ -3008,62 +1871,6 @@ definitions:
         type: integer
         format: int32
         description: Indicates how many events are in the given league.
-  LineResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        description: If the value is NOT_EXISTS, than this will be the only parameter in the response. All other params would be empty. [SUCCESS = OK, NOT_EXISTS = Line not offered anymore]
-        enum:
-          - SUCCESS
-          - NOT_EXISTS
-      price:
-        type: number
-        format: double
-        description: Latest price.
-      lineId:
-        type: integer
-        format: int64
-        description: Line identification needed to place a bet.
-      altLineId:
-        type: integer
-        format: int64
-        description: This would be needed to place the bet if the handicap is on alternate line, otherwise it will not be populated in the response.
-      team1Score:
-        type: integer
-        format: int32
-        description: Away team score. Applicable to soccer only.
-      team2Score:
-        type: integer
-        format: int32
-        description: Home team score. Applicable to soccer only.
-      team1RedCards:
-        type: integer
-        format: int32
-        description: Team 1 red cards. Applicable to soccer only.
-      team2RedCards:
-        type: integer
-        format: int32
-        description: Team 2 red cards. Applicable to soccer only.
-      maxRiskStake:
-        type: number
-        format: double
-        description: Maximum bettable risk amount.
-      minRiskStake:
-        type: number
-        format: double
-        description: Minimum bettable risk amount.
-      maxWinStake:
-        type: number
-        format: double
-        description: Maximum bettable win amount.
-      minWinStake:
-        type: number
-        format: double
-        description: Minimum bettable win amount.
-      effectiveAsOf:
-        type: string
-        description: Line is effective as of this date and time in UTC.
   LineResponseV2:
     type: object
     properties:
@@ -3136,23 +1943,6 @@ definitions:
         type: integer
         format: int32
         description: Team 2 red cards for the supported periods. Applicable to soccer only.          
-  ParlayLinesRequest:
-    type: object
-    properties:
-      oddsFormat:
-        type: string
-        description: Odds in the response will be in this format. [American, Decimal, HongKong, Indonesian, Malay]
-        enum:
-          - American
-          - Decimal
-          - HongKong
-          - Indonesian
-          - Malay
-      legs:
-        type: array
-        description: This is a collection of legs
-        items:
-          $ref: '#/definitions/ParlayLineRequest'
   ParlayLinesRequestV2:
     type: object
     properties:
@@ -3170,49 +1960,6 @@ definitions:
         description: This is a collection of legs
         items:
           $ref: '#/definitions/ParlayLineRequestV2'          
-  ParlayLineRequest:
-    type: object
-    properties:
-      uniqueLegId:
-        type: string
-        description: This unique id of the leg. It used to identify and match leg in the response.
-      eventId:
-        type: integer
-        format: int64
-        description: Id of the event.
-      periodNumber:
-        type: integer
-        format: int32
-        description: This represents the period of the match. For example, for soccer we have 0 (Game), 1 (1st Half), 2 (2nd Half)
-      legBetType:
-        type: string
-        description: Only SPREAD, MONEYLINE and TOTAL_POINTS are supported. [SPREAD, MONEYLINE, TOTAL_POINTS]
-        enum:
-          - SPREAD
-          - MONEYLINE
-          - TOTAL_POINTS
-      team:
-        type: string
-        description: Chosen team type. This is needed only for SPREAD and MONEYLINE wager types. [Team1, Team2, Draw (MONEYLINE only)]
-        enum:
-          - Team1
-          - Team2
-          - Draw
-      side:
-        type: string
-        description: Chosen side. This is needed only for TOTAL_POINTS wager type.  [OVER, UNDER]
-        enum:
-          - OVER
-          - UNDER
-      handicap:
-        type: number
-        format: double
-        description: This is needed for SPREAD and TOTAL_POINTS bet type.
-    required: 
-      - uniqueLegId
-      - eventId
-      - periodNumber
-      - legBetType
   ParlayLineRequestV2:
     type: object
     properties:
@@ -3257,40 +2004,6 @@ definitions:
       - eventId
       - periodNumber
       - legBetType      
-  ParlayLinesResponse:
-    type: object
-    properties:
-      status:
-        type: string
-        description: Status of the parlay [VALID = Parlay is valid, PROCESSED_WITH_ERROR = Parlay contains error(s)]
-        example: PROCESSED_WITH_ERROR
-        enum:
-          - VALID
-          - PROCESSED_WITH_ERROR
-      error:
-        type: string
-        description: INVALID_LEGS. Signifies that one or more legs are invalid. Populated only if status is PROCESSED_WITH_ERROR.
-        example: INVALID_LEGS
-      maxRiskStake:
-        type: number
-        format: double
-        description: Maximum allowed stake amount.
-      minRiskStake:
-        type: number
-        format: double
-        description: Minimum allowed stake amount.
-      roundRobinOptionWithOdds:
-        type: array
-        description: Provides array with all acceptable Round Robin options with parlay odds for that option.
-        items:
-          $ref: '#/definitions/RoundRobinOptionWithOdds'
-      legs:
-        type: array
-        description: The collection of legs (the format of the object is described below).
-        items:
-          $ref: '#/definitions/ParlayLineLeg'
-    required: 
-      - status
   ParlayLinesResponseV2:
     type: object
     properties:
@@ -3625,182 +2338,6 @@ definitions:
     required: 
       - legId
       - status
-  OddsResponseV1:
-    type: object
-    properties:
-      sportId:
-        type: integer
-        format: int32
-        description: Same as requested sport Id.
-      last:
-        type: integer
-        format: int64
-        description: Use this value for the subsequent requests for since query parameter to get just the changes since previous response.
-      leagues:
-        type: array
-        description: Contains a list of Leagues.
-        items:
-          $ref: '#/definitions/OddsLeagueV1'
-  OddsLeagueV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: League Id.
-      events:
-        type: array
-        description: Contains a list of events.
-        items:
-          $ref: '#/definitions/OddsEventV1'
-  OddsEventV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-        description: Event Id.
-      awayScore:
-        type: number
-        format: double
-        description: Away team score. Only for live soccer events.
-      homeScore:
-        type: number
-        format: double
-        description: Home team score. Only for live soccer events.
-      awayRedCards:
-        type: integer
-        format: int32
-        description: Away team red cards. Only for live soccer events.
-      homeRedCards:
-        type: integer
-        format: int32
-        description: Home team red cards. Only for live soccer events.
-      periods:
-        type: array
-        description: Contains a list of periods.
-        items:
-          $ref: '#/definitions/OddsPeriodV1'
-  OddsPeriodV1:
-    type: object
-    properties:
-      lineId:
-        type: integer
-        format: int64
-        description: Line Id.
-      number:
-        type: integer
-        format: int32
-        description: This represents the period of the match. For example, for soccer we have  0 (Game), 1 (1st Half) & 2 (2nd Half)
-      cutoff:
-        type: string
-        format: date-time
-        description: Period’s wagering cut-off date in UTC.
-      maxSpread:
-        type: number
-        format: double
-        description: Maximum spread bet. Only in straight odds response.
-      maxMoneyline:
-        type: number
-        format: double
-        description: Maximum moneyline bet. Only in straight odds response.
-      maxTotal:
-        type: number
-        format: double
-        description: Maximum total points bet. Only in straight odds response.
-      maxTeamTotal:
-        type: number
-        format: double
-        description: Maximum team total points bet. Only in straight odds response.
-      spreads:
-        type: array
-        description: Container for spread odds.
-        items:
-          $ref: '#/definitions/OddsSpreadV1'
-      moneyline:
-        $ref: '#/definitions/OddsMoneylineV1'
-      totals:
-        type: array
-        description: Container for team total points.
-        items:
-          $ref: '#/definitions/OddsTotalV1'
-      teamTotal:
-        $ref: '#/definitions/OddsTeamTotalsV1'
-  OddsSpreadV1:
-    type: object
-    properties:
-      altLineId:
-        type: integer
-        format: int64
-        description: This is present only if it’s alternative line.
-      hdp:
-        type: number
-        format: double
-        description: Home team handicap.
-      home:
-        type: number
-        format: double
-        description: Home team price.
-      away:
-        type: number
-        format: double
-        description: Away team price.
-  OddsMoneylineV1:
-    type: object
-    properties:
-      home:
-        type: number
-        format: double
-        description: Away team price
-      away:
-        type: number
-        format: double
-        description: Away team price.
-      draw:
-        type: number
-        format: double
-        description: Draw price. This is present only for events we offer price for draw.
-  OddsTotalV1:
-    type: object
-    properties:
-      altLineId:
-        type: integer
-        format: int64
-        description: This is present only if it’s alternative line.
-      points:
-        type: number
-        format: double
-        description: Total points.
-      over:
-        type: number
-        format: double
-        description: Over price.
-      under:
-        type: number
-        format: double
-        description: Under price.
-  OddsTeamTotalsV1:
-    type: object
-    properties:
-      home:
-        $ref: '#/definitions/OddsTeamTotalV1'
-      away:
-        $ref: '#/definitions/OddsTeamTotalV1'
-  OddsTeamTotalV1:
-    type: object
-    properties:
-      points:
-        type: number
-        format: double
-        description: Total points.
-      over:
-        type: number
-        format: double
-        description: Over price.
-      under:
-        type: number
-        format: double
-        description: Under price.
   OddsResponseV3:
     type: object
     properties:
@@ -4026,194 +2563,6 @@ definitions:
         type: number
         format: double
         description: Under price.
-  ParlayOddsResponseV1:
-    type: object
-    properties:
-      sportId:
-        type: integer
-        format: int32
-        description: Same as requested sport Id.
-      last:
-        type: integer
-        format: int64
-        description: Use this value for the subsequent requests for since query parameter to get just the changes since previous response.
-      leagues:
-        type: array
-        description: Contains a list of Leagues.
-        items:
-          $ref: '#/definitions/ParlayOddsLeagueV1'
-    required:
-      - sportId
-      - last
-      - leagues
-  ParlayOddsLeagueV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: League Id.
-      events:
-        type: array
-        description: Contains a list of events.
-        items:
-          $ref: '#/definitions/ParlayOddsEventV1'
-    required:
-      - id
-      - events
-  ParlayOddsEventV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int64
-        description: Event Id.
-      awayScore:
-        type: number
-        format: double
-        description: Away team score. Only for live soccer events.
-      homeScore:
-        type: number
-        format: double
-        description: Home team score. Only for live soccer events.
-      awayRedCards:
-        type: integer
-        format: int32
-        description: Away team red cards. Only for live soccer events.
-      homeRedCards:
-        type: integer
-        format: int32
-        description: Home team red cards. Only for live soccer events.
-      periods:
-        type: array
-        description: Contains a list of periods.
-        items:
-          $ref: '#/definitions/ParlayOddsPeriodV1'
-    required:
-      - id
-      - periods
-  ParlayOddsPeriodV1:
-    type: object
-    properties:
-      lineId:
-        type: integer
-        format: int64
-        description: Line Id.
-      number:
-        type: integer
-        format: int32
-        description: This represents the period of the match. For example, for soccer we have 0 (Game), 1 (1st Half) & 2 (2nd Half)
-      cutoff:
-        type: string
-        format: date-time
-        description: Period’s wagering cut-off date in UTC.
-      maxSpread:
-        type: number
-        format: double
-        description: Maximum spread bet. Only in straight odds response.
-      maxMoneyline:
-        type: number
-        format: double
-        description: Maximum moneyline bet. Only in straight odds response.
-      maxTotal:
-        type: number
-        format: double
-        description: Maximum total points bet. Only in straight odds response.
-      maxTeamTotal:
-        type: number
-        format: double
-        description: Maximum team total points bet. Only in straight odds response.
-      spreads:
-        type: array
-        description: Container for spread odds.
-        items:
-          $ref: '#/definitions/ParlayOddsSpreadV1'
-      moneyline:
-        $ref: '#/definitions/ParlayOddsMoneylineV1'
-      totals:
-        type: array
-        description: Container for team total points.
-        items:
-          $ref: '#/definitions/ParlayOddsTotalV1'
-      teamTotal:
-        $ref: '#/definitions/ParlayOddsTeamTotalsV1'
-    required:
-      - lineId
-      - number
-      - cutoff
-  ParlayOddsSpreadV1:
-    type: object
-    properties:
-      altLineId:
-        type: integer
-        format: int64
-        description: This is present only if it’s alternative line.
-      hdp:
-        type: number
-        format: double
-        description: Home team handicap.
-      home:
-        type: number
-        format: double
-        description: Home team price.
-      away:
-        type: number
-        format: double
-        description: Away team price.
-    required:
-      - hdp
-      - home
-      - away
-  ParlayOddsMoneylineV1:
-    type: object
-    properties:
-      home:
-        type: number
-        format: double
-        description: Away team price
-      away:
-        type: number
-        format: double
-        description: Away team price.
-      draw:
-        type: number
-        format: double
-        description: Draw price. This is present only for events we offer price for draw.
-    required:
-      - home
-      - away
-  ParlayOddsTotalV1:
-    $ref: '#/definitions/ParlayOddsTotalsV1'
-  ParlayOddsTeamTotalsV1:
-    type: object
-    properties:
-      away:
-        $ref: '#/definitions/ParlayOddsTotalsV1'
-      home:
-        $ref: '#/definitions/ParlayOddsTotalsV1'
-  ParlayOddsTotalsV1:
-    type: object
-    properties:
-      altLineId:
-        type: number
-        format: int64
-        description: Line Id for the alternate line. This is present only if it’s alternative line.
-      points:
-        type: number
-        format: double
-        description: Total points.
-      over:
-        type: number
-        format: double
-        description: Over price.
-      under:
-        type: number
-        format: double
-        description: Under price.
-    required:
-      - points
-      - over
-      - under
   ParlayOddsResponseV3:
     type: object
     properties:
@@ -4591,27 +2940,6 @@ definitions:
       team2TotalShortDescription:
         type: string
         description: Short description for Team2 Totals
-  SportsResponseV1:
-    type: object
-    properties:
-      sports:
-        type: array
-        description: Sports container.
-        items:
-          $ref: '#/definitions/SportV1'
-  SportV1:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: Sport Id.
-      name:
-        type: string
-        description: Sport name.
-      hasOfferings:
-        type: boolean
-        description: Whether the sport currently has events or specials.
   SportsResponseV3:
     type: object
     properties:
@@ -4732,22 +3060,6 @@ definitions:
         type: number
         format: double
         description: Number of points the line will be teased for the given league.
-  SpecialsFixturesResponse:
-    type: object
-    properties:
-      sportId:
-        format: int32
-        description: Id of a sport for which to retrieve the odds.
-        type: integer
-      last:
-        format: int64
-        description: Used for retrieving changes only on subsequent requests. Provide this value as the Since paramter in subsequent calls to only retrieve changes.
-        type: integer
-      leagues:
-        description: Contains a list of Leagues.
-        type: array
-        items:
-          $ref: '#/definitions/SpecialsFixturesLeague'
   SpecialsFixturesResponseV2:
     type: object
     properties:
@@ -4764,18 +3076,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialsFixturesLeagueV2'          
-  SpecialsFixturesLeague:
-    type: object
-    properties:
-      id:
-        format: int32
-        description: FixturesLeague Id.
-        type: integer
-      specials:
-        description: A collection of Specials
-        type: array
-        items:
-          $ref: '#/definitions/SpecialFixture'
   SpecialsFixturesLeagueV2:
     type: object
     properties:
@@ -4788,56 +3088,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialFixtureV2'          
-  SpecialFixture:
-    type: object
-    properties:
-      id:
-        format: int64
-        description: Unique Id
-        type: integer
-      betType:
-        description: The type [MULTI_WAY_HEAD_TO_HEAD, SPREAD, OVER_UNDER]
-        enum:
-          - MULTI_WAY_HEAD_TO_HEAD
-          - SPREAD
-          - OVER_UNDER
-        type: string
-      name:
-        description: Name of the special.
-        type: string
-      date:
-        format: date-time
-        description: Date of the special in UTC.
-        type: string
-      cutoff:
-        format: date-time
-        description: Wagering cutoff date in UTC.
-        type: string
-      category:
-        description: The category that the special falls under.
-        type: string
-      units:
-        description: Measurment in the context of the special. This is applicable to specials bet type spead and over/under. In a hockey special this could be goals.
-        type: string
-      status:
-        description: |
-          Status of the Special 
-          
-          O = This is the starting status of a game. It means that the lines are open for betting, 
-          H = This status indicates that the lines are temporarily unavailable for betting, 
-          I = This status indicates that one or more lines have a red circle (a lower maximum bet amount)
-        enum:
-          - O
-          - H
-          - I
-        type: string
-      event:
-        $ref: '#/definitions/SpecialsFixturesEvent'
-      contestants:
-        description: ContestantLines available for wagering.
-        type: array
-        items:
-          $ref: '#/definitions/SpecialsFixturesContestant'
   SpecialFixtureV2:
     type: object
     properties:
@@ -4899,18 +3149,6 @@ definitions:
           - 1
           - 2
         type: integer
-  SpecialsFixturesEvent:
-    type: object
-    description: Optional event asscoaited with the special.
-    properties:
-      id:
-        format: int32
-        description: Event Id
-        type: integer
-      periodNumber:
-        format: int32
-        description: The period of the match. For example in soccer 0 (Game), 1 (1st Half) & 2 (2nd Half)
-        type: integer
   SpecialsFixturesEventV2:
     type: object
     description: Optional event asscoaited with the special.
@@ -4943,56 +3181,6 @@ definitions:
         format: int32
         description: Rotation Number.
         type: integer
-  SettledSpecialsResponseV1:
-    description: Response dto for SettledSpecials request
-    type: object
-    properties:
-      sportId:
-        format: int32
-        description: Id of a sport for which to retrieve the odds.
-        type: integer
-      last:
-        format: int64
-        description: Last index for the settled fixture
-        type: integer
-      leagues:
-        description: List of Leagues.
-        type: array
-        items:
-          $ref: '#/definitions/SettledSpecialsLeagueV1'
-  SettledSpecialsLeagueV1:
-    description: League Dto to hold all settled specials for the league
-    type: object
-    properties:
-      id:
-        format: int32
-        description: League Id.
-        type: integer
-      specials:
-        description: A collection of Settled Specials
-        type: array
-        items:
-          $ref: '#/definitions/SettledSpecialV1'
-  SettledSpecialV1:
-    description: Settled Special
-    type: object
-    properties:
-      id:
-        format: int64
-        description: Id for the Settled Special
-        type: integer
-      status:
-        format: int32
-        description: Status of the settled special.
-        type: integer
-      settlementId:
-        format: int64
-        description: Id for the Settled Special
-        type: integer
-      settledAt:
-        format: date-time
-        description: Settled DateTime
-        type: string
   SettledSpecialsResponseV3:
     description: Response dto for SettledSpecials request
     type: object
@@ -5124,22 +3312,6 @@ definitions:
         format: double
         description: Handicap.
         type: number
-  SpecialOddsResponse:
-    type: object
-    properties:
-      sportId:
-        format: int32
-        description: Id of a sport for which to retrieve the odds.
-        type: integer
-      last:
-        format: int64
-        description: Used for retrieving changes only on subsequent requests. Provide this value as the Since paramter in subsequent calls to only retrieve changes.
-        type: integer
-      leagues:
-        description: Contains a list of Leagues.
-        type: array
-        items:
-          $ref: '#/definitions/SpecialOddsLeague'
   SpecialOddsResponseV2:
     type: object
     properties:
@@ -5156,18 +3328,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialOddsLeagueV2'
-  SpecialOddsLeague:
-    type: object
-    properties:
-      id:
-        format: int32
-        description: League id.
-        type: integer
-      specials:
-        description: A collection of FixturesSpecial.
-        type: array
-        items:
-          $ref: '#/definitions/SpecialOddsSpecial'
   SpecialOddsLeagueV2:
     type: object
     properties:
@@ -5180,22 +3340,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialOddsSpecialV2'
-  SpecialOddsSpecial:
-    type: object
-    properties:
-      id:
-        format: int64
-        description: Special Id.
-        type: integer
-      maxRisk:
-        format: double
-        description: Maximum risk amount.
-        type: number
-      contestantLines:
-        description: ContestantLines available for wagering on.
-        type: array
-        items:
-          $ref: '#/definitions/SpecialOddsContestantLine'
   SpecialOddsSpecialV2:
     type: object
     properties:
@@ -5212,25 +3356,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SpecialOddsContestantLineV2'
-  SpecialOddsContestantLine:
-    type: object
-    properties:
-      id:
-        format: int64
-        description: ContestantLine Id.
-        type: integer
-      lineId:
-        format: int64
-        description: Line identifier required for placing a bet.
-        type: integer
-      price:
-        format: double
-        description: Price of the line.
-        type: number
-      handicap:
-        format: double
-        description: 'A number indicating the spread, over/under etc.'
-        type: number
   SpecialOddsContestantLineV2:
     type: object
     properties:
