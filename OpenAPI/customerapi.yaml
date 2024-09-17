@@ -54,49 +54,6 @@ paths:
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
       deprecated: false
-  /v1/translations:
-    get:
-      tags:
-        - Default
-      summary: Get Translations - v1
-      description: Returns translations for strings in base texts array. Each string in parameters must be URL encoded and separated with '|' character. Parameters are not case-sensitive.
-      operationId: Translations_V1_Get
-      consumes: []
-      produces:
-        - application/json
-      parameters:
-        - name: cultureCodes
-          in: query
-          description: Must be in Language Culture Name format.
-          required: true
-          type: string
-        - name: baseTexts
-          in: query
-          description: Array of strings to be translated.
-          required: true
-          type: string
-      deprecated: true
-      responses:
-        '200':
-          description: OK
-          schema:
-            $ref: '#/definitions/TranslationResponse'
-        '400':
-          description: BadRequest
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '401':
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '403':
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        '500':
-          description: InternalServerError
-          schema:
-            $ref: '#/definitions/ExtendedErrorResponse'
   /v3/translations:
     get:
       tags:
@@ -217,10 +174,6 @@ definitions:
         format: double
         description: Sum of not yet settled bet amounts.
         type: number
-      givenCredit:
-        format: double
-        description: Client’s credit.
-        type: number
       currency:
         description: Client’s currency code.
         type: string
@@ -229,14 +182,6 @@ definitions:
       - outstandingTransactions
       - givenCredit
       - currency
-  TranslationResponse:
-    type: object
-    properties:
-      translations:
-        type: array
-        description: Collection of translations.
-        items:
-          $ref: '#/definitions/Translation'
   TranslationResponseV3:
     type: object
     properties:
@@ -245,17 +190,6 @@ definitions:
         description: Collection of translations.
         items:
           $ref: '#/definitions/TranslationV3'          
-  Translation:
-    type: object
-    properties:
-      text:
-        type: string
-        description: Original requested text to be translated.
-      cultures:
-        type: array
-        description: Collection of translations by culture.
-        items:
-          $ref: '#/definitions/TranslationByCulture'
   TranslationV3:
     type: object
     properties:
@@ -267,15 +201,6 @@ definitions:
         description: Collection of translations by culture.
         items:
           $ref: '#/definitions/TranslationByCultureV3'          
-  TranslationByCulture:
-    type: object
-    properties:
-      id:
-        type: string
-        description: Culture based on which the text is translated.
-      text:
-        type: string
-        description: Translation text.
   TranslationByCultureV3:
     type: object
     properties:
