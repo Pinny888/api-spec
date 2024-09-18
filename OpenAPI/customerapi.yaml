@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: PS3838 API - Customer Account API Reference
+  title: Pinnacle888 API - Customer Account API Reference
   description:  |
     
     # Authentication 
@@ -16,7 +16,7 @@ info:
     
   x-logo:
     url: ''
-host: api.ps3838.com
+host: api.pinnacle888.com
 schemes:
   - https
 security:
