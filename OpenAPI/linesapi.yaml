@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: PS3838 - Lines API Reference
+  title: Pinnacle888 - Lines API Reference
   description: |
     All about odds and fixtures
   
@@ -16,7 +16,7 @@ info:
     `Authorization: Basic U03MyOT23YbzMDc6d3c3O1DQ1`
   x-logo:
     url: ''
-host: api.ps3838.com
+host: api.pinnacle888.com
 schemes:
   - https
 security:
@@ -584,7 +584,7 @@ paths:
           collectionFormat: multi
         - name: toCurrencyCode
           in: query
-          description: 3 letter currency code as in the [/currency](https://ps3838api.github.io/docs/?api=lines#tag/Others/operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
+          description: 3 letter currency code as in the [/currency](https://pinny888.github.io/docs/?api=lines#tag/Others/operation/Currencies_V2_Get) response. Limits will be returned in the requested currency. Default is USD. 
           required: false
           type: string
       responses:
@@ -3340,5 +3340,5 @@ definitions:
         type: number
       max:
         format: double
-        description: Maximum bet volume amount per contestant. See [How to calculate max risk from the max volume](https://github.com/ps3838api/ps3838api.github.io/blob/master/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)    
+        description: Maximum bet volume amount per contestant. See [How to calculate max risk from the max volume](https://github.com/pinny888/pinny888.github.io/blob/main/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)    
         type: number
