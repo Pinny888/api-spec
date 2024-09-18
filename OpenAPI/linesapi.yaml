@@ -953,13 +953,13 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'            
-  /v2/line/parlay:
+  /v3/line/parlay:
     post:
       tags:
         - Line
-      summary: Get Parlay Line - v2
+      summary: Get Parlay Line - v3
       description: Returns parlay lines and calculate odds.
-      operationId: Line_Parlay_V2_Post
+      operationId: Line_Parlay_V3_Post
       consumes:
         - application/json
       produces:
@@ -969,12 +969,12 @@ paths:
           name: request
           required: true
           schema:
-            $ref: '#/definitions/ParlayLinesRequestV2'
+            $ref: '#/definitions/ParlayLinesRequestV3'
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/ParlayLinesResponseV2'
+            $ref: '#/definitions/ParlayLinesResponseV3'
         '400':
           description: BadRequest
           schema:
@@ -1943,7 +1943,7 @@ definitions:
         type: integer
         format: int32
         description: Team 2 red cards for the supported periods. Applicable to soccer only.          
-  ParlayLinesRequestV2:
+  ParlayLinesRequestV3:
     type: object
     properties:
       oddsFormat:
@@ -1959,8 +1959,8 @@ definitions:
         type: array
         description: This is a collection of legs
         items:
-          $ref: '#/definitions/ParlayLineRequestV2'          
-  ParlayLineRequestV2:
+          $ref: '#/definitions/ParlayLineRequestV3'          
+  ParlayLineRequestV3:
     type: object
     properties:
       uniqueLegId:
@@ -2004,7 +2004,7 @@ definitions:
       - eventId
       - periodNumber
       - legBetType      
-  ParlayLinesResponseV2:
+  ParlayLinesResponseV3:
     type: object
     properties:
       status:
@@ -2038,7 +2038,7 @@ definitions:
         type: array
         description: Provides array with all acceptable Round Robin options with parlay odds for that option.
         items:
-          $ref: '#/definitions/RoundRobinOptionWithOddsV2'
+          $ref: '#/definitions/RoundRobinOptionWithOddsV3'
       legs:
         type: array
         description: The collection of legs (the format of the object is described below).
@@ -2046,44 +2046,7 @@ definitions:
           $ref: '#/definitions/ParlayLineLeg'
     required: 
       - status      
-  RoundRobinOptionWithOdds:
-    type: object
-    properties:
-      roundRobinOption:
-        type: string
-        description: | 
-          RoundRobinOptions  
-            
-            Parlay = Single parlay that include all wagers (No Round Robin),  
-            TwoLegRoundRobin = Multiple parlays having 2 wagers each (round robin style),  
-            ThreeLegRoundRobin = Multiple parlays having 3 wagers each (round robin style),  
-            FourLegRoundRobin = Multiple parlays having 4 wagers each (round robin style),  
-            FiveLegRoundRobin = Multiple parlays having 5 wagers each (round robin style),  
-            SixLegRoundRobin = Multiple parlays having 6 wagers each (round robin style),  
-            SevenLegRoundRobin = Multiple parlays having 7 wagers each (round robin style),   
-            EightLegRoundRobin = Multiple parlays having 8 wagers each (round robin style)  
-        enum:
-          - Parlay
-          - TwoLegRoundRobin
-          - ThreeLegRoundRobin
-          - FourLegRoundRobin
-          - FiveLegRoundRobin
-          - SixLegRoundRobin
-          - SevenLegRoundRobin
-          - EightLegRoundRobin
-      odds:
-        type: number
-        format: double
-        description: Parlay odds for this option.
-      unroundedDecimalOdds:
-        type: number
-        format: double
-        description: Unrounded parlay odds in decimal format to be used for calculations only
-    required: 
-      - roundRobinOption
-      - odds
-      - unroundedDecimalOdds
-  RoundRobinOptionWithOddsV2:
+  RoundRobinOptionWithOddsV3:
     type: object
     properties:
       roundRobinOption:
