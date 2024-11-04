@@ -232,7 +232,7 @@ paths:
       parameters:
         - name: betlist
           in: query
-          description: 'Type of bet list to return. Not needed when betids is submitted.'
+          description: 'Type of bet list to return. Not needed when betIds is submitted.'
           required: false
           type: string
           enum:
@@ -288,7 +288,7 @@ paths:
           required: false
           type: integer
           default: 0  
-        - name: betids
+        - name: betIds
           in: query
           description: 'A comma separated list of bet ids. When betids is submitted, no other parameter is necessary. Maximum is 100 ids. Works for all non settled bets and all bets settled in the last 30 days.'
           required: false
@@ -487,9 +487,9 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: betids
+        - name: betIds
           in: query
-          description: 'A comma separated list of bet ids. When betids is submitted, no other parameter is necessary. Maximum is 100 ids. Works for all bets settled in the last 30 days.'
+          description: 'A comma separated list of bet ids. When betIds is submitted, no other parameter is necessary. Maximum is 100 ids. Works for all bets settled in the last 30 days.'
           required: false
           type: array
           items:
