@@ -2881,8 +2881,12 @@ definitions:
     type: object
     properties:
       home:
+        type: array
+        description: Container for Home team's total points.
         $ref: '#/definitions/OddsTeamTotalV4'
       away:
+        type: array
+        description: Container for Away team's total points.
         $ref: '#/definitions/OddsTeamTotalV4'
   OddsTeamTotalV3:
     type: object
