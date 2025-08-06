@@ -7,17 +7,16 @@ This service will return odds data for affiliate use.
 - Only affiliates with allowed access are permitted to retrieve odds data from this endpoint.
 Call the API along with the Sport name to get events.
 
-Each Sport has its own logic for getting hot events:
-
-- If the requested Sport is Soccer: The Hot Events will be based on the following information to return all Hot Events.
-	- Hot Soccer Team and Hot Leagues (return Hot Events starting in the next 15 days).
-	- Highest max bet of Money Line.
-- If requested Sport is E-Sports: The Hot Events will be based on the following information to return all Hot Events for each Game.
-	- Hot E-Sports team and Hot Leagues (return Hot Events starting in the next 15 days).
+Each Sport has its own logic for retrieving and sorting events:
+- Soccer: When the requested Sport is Soccer, events are returned and sorted based on:
+	- Hot Soccer Team and Hot Leagues (events starting within the next 15 days)
 	- Highest max bet of Money Line
-- For all other Sports: The Hot Events will be based on the following information to return all Hot Events for each Sport.
-	- Hot Leagues (return Hot Events starting in the next 15 days).
-	- Highest max bets of Money line.
+- E-Sports: For E-Sports, events are returned and sorted based on:
+	- Hot E-Sports Team and Hot leagues (events starting within the next 15 days)
+	- Highest max bet of Money Line
+- All Other Sports: For all other sports, events are sorted and returned based on:
+	- Hot Leagues (events starting within the next 15 days)
+	- Highest max bet of Money Line
 
 ## Endpoint
 
@@ -158,13 +157,13 @@ Each Sport has its own logic for getting hot events:
 | zh-tw | Traditional Chinese (繁體中文) |
 | id | Indonesian |
 | vi | Vietnamese (Tiếng Việt) |
-| ja | Japanese (日本語) |
+| jp | Japanese (日本語) |
 | ko | Korean (한국어) | 
 | th | Thai (ภาษา ไทย) | 
 | fr | French (Français) |
 | de | German (Deutsch) |
 | es | Spanish (Español) |
-| pt | Brazilian Portuguese | 
+| br | Brazilian Portuguese | 
 | ru | Russian (Русский ) |
 | tr | Turkish |
 | hi | Hindi | 
