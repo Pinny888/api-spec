@@ -947,17 +947,17 @@ definitions:
           - BETTING_SUSPENDED
       uniqueRequestId:
         type: string
-        example: 2d5ea831-03c2-40c7-9fe2-1acc202f6d52
+        example: D5CC50E4-284D-4D50-8D49-429BDC4F2A48
         description: Echo of the uniqueRequestId from the request.
       win:
         type: number
         format: double
-        example: 1
+        example: 5.5
         description: Win amount.
       risk:
         type: number
         format: double
-        example: 1.5
+        example: 10.5
         description: Risk amount.
       price:
         type: number
@@ -967,7 +967,7 @@ definitions:
       points:
         type: number
         format: double
-        example: 2.5
+        example: 1.5
         description: points
   StraightBet:
     type: object
