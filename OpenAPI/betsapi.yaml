@@ -967,7 +967,7 @@ definitions:
       points:
         type: number
         format: double
-        example: 1.5
+        example: 1
         description: points
   StraightBet:
     type: object
