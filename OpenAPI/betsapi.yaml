@@ -67,6 +67,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
+      deprecated: true
   /v2/bets/parlay:
     post:
       tags:
@@ -104,7 +105,8 @@ paths:
         '500':
           description: InternalServerError
           schema:
-            $ref: '#/definitions/ErrorResponseWithErrorRef'			
+            $ref: '#/definitions/ErrorResponseWithErrorRef'
+      deprecated: true
   /v1/bets/teaser:
     post:
       tags:
@@ -143,6 +145,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
+      deprecated: true
   /v2/bets/special:
     post:
       tags:
@@ -181,6 +184,7 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ErrorResponseWithErrorRef'
+      deprecated: true
   /v4/bets/place:
     post:
       tags:
