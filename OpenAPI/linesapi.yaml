@@ -1494,6 +1494,34 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+  /v3/event-link:
+    get:
+      tags:
+        - Others
+      summary: Get Event Link - v3
+      description: Returns a link directly to an event for Deep Linking
+      operationId: Event_Link_V3_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/EventLinkResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
 securityDefinitions:
   basicAuth:
     type: basic
@@ -3938,6 +3966,29 @@ definitions:
         items:
           $ref: '#/definitions/SpecialOddsContestantLineV2'
   SpecialOddsContestantLineV2:
+    type: object
+    properties:
+      id:
+        format: int64
+        description: ContestantLine Id.
+        type: integer
+      lineId:
+        format: int64
+        description: Line identifier required for placing a bet.
+        type: integer
+      price:
+        format: double
+        description: Price of the line.
+        type: number
+      handicap:
+        format: double
+        description: 'A number indicating the spread, over/under etc.'
+        type: number
+      max:
+        format: double
+        description: Maximum bet volume amount per contestant. See [How to calculate max risk from the max volume](https://github.com/pinny888/pinny888.github.io/blob/main/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)    
+        type: number
+  EventLinkResponse:
     type: object
     properties:
       id:
