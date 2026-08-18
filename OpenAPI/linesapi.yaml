@@ -3991,23 +3991,10 @@ definitions:
   EventLinkResponse:
     type: object
     properties:
-      id:
-        format: int64
-        description: ContestantLine Id.
-        type: integer
-      lineId:
-        format: int64
-        description: Line identifier required for placing a bet.
-        type: integer
-      price:
-        format: double
-        description: Price of the line.
-        type: number
-      handicap:
-        format: double
-        description: 'A number indicating the spread, over/under etc.'
-        type: number
-      max:
-        format: double
-        description: Maximum bet volume amount per contestant. See [How to calculate max risk from the max volume](https://github.com/pinny888/pinny888.github.io/blob/main/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)    
-        type: number
+      reportDateTime:
+        type: string
+        format: date-time
+        description: Date and time of the response.
+      eventLink:
+        type: string
+        description: Deep Link URL for the passed in event
