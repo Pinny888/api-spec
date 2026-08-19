@@ -1504,7 +1504,23 @@ paths:
       consumes: []
       produces:
         - application/json
-      parameters: []
+      parameters:
+        - name: eventId
+          in: query
+          description: The ID of an Event. Single Event only.
+          required: true
+          type: integer
+          format: int64
+        - name: view
+          in: query
+          description: Default is COMPACT. [COMPACT, ESPORTS-EURO, ESPORTS-NEW, EURO]
+          required: false
+          type: string
+          enum:
+            - COMPACT
+            - ESPORTS-EURO
+            - ESPORTS-NEW
+            - EURO
       responses:
         '200':
           description: OK
