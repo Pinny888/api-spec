@@ -1494,6 +1494,50 @@ paths:
           description: InternalServerError
           schema:
             $ref: '#/definitions/ExtendedErrorResponse'
+  /v3/event-link:
+    get:
+      tags:
+        - Others
+      summary: Get Event Link - v3
+      description: Returns a link directly to an event for Deep Linking
+      operationId: Event_Link_V3_Get
+      consumes: []
+      produces:
+        - application/json
+      parameters:
+        - name: eventId
+          in: query
+          description: The ID of an Event. Single Event only.
+          required: true
+          type: integer
+          format: int64
+        - name: view
+          in: query
+          description: Default is COMPACT. [COMPACT, ESPORTS-EURO, ESPORTS-NEW, EURO]
+          required: false
+          type: string
+          enum:
+            - COMPACT
+            - ESPORTS-EURO
+            - ESPORTS-NEW
+            - EURO
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/EventLinkResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: InternalServerError
+          schema:
+            $ref: '#/definitions/ExtendedErrorResponse'
 securityDefinitions:
   basicAuth:
     type: basic
@@ -3960,3 +4004,13 @@ definitions:
         format: double
         description: Maximum bet volume amount per contestant. See [How to calculate max risk from the max volume](https://github.com/pinny888/pinny888.github.io/blob/main/FAQs.md#how-to-calculate-max-risk-from-the-max-volume-limits-in-odds)    
         type: number
+  EventLinkResponse:
+    type: object
+    properties:
+      reportDateTime:
+        type: string
+        format: date-time
+        description: Date and time of the response.
+      eventLink:
+        type: string
+        description: Deep Link URL for the passed in event
